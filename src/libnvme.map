@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: LGPL-2.1-or-later
 LIBNVME_1.10 {
 	global:
+		nvme_get_features_namespace_admin_label;
 		nvme_free_uri;
 		nvme_get_ana_log_atomic;
 		nvme_get_ana_log_len_from_id_ctrl;
