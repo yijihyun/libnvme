@@ -12214,6 +12214,9 @@ true if **status** is of the specified type and value
 ``NVME_FEAT_FID_FDP_EVENTS``
   FDP Events
 
+``NVME_FEAT_FID_NAMESPACE_ADMIN_LABEL``
+  Namespace Admin Label
+
 ``NVME_FEAT_FID_ENH_CTRL_METADATA``
   Enhanced Controller Metadata
 

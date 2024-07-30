@@ -7605,6 +7605,7 @@ enum nvme_cmd_get_log_lid {
  * @NVME_FEAT_FID_SPINUP_CONTROL:	Spinup Control
  * @NVME_FEAT_FID_FDP:			Flexible Data Placement
  * @NVME_FEAT_FID_FDP_EVENTS:		FDP Events
+ * @NVME_FEAT_FID_NAMESPACE_ADMIN_LABEL: Namespace Admin Label
  * @NVME_FEAT_FID_ENH_CTRL_METADATA:	Enhanced Controller Metadata
  * @NVME_FEAT_FID_CTRL_METADATA:	Controller Metadata
  * @NVME_FEAT_FID_NS_METADATA:		Namespace Metadata
@@ -7643,6 +7644,7 @@ enum nvme_features_id {
 	NVME_FEAT_FID_SPINUP_CONTROL				= 0x1a,
 	NVME_FEAT_FID_FDP					= 0x1d,
 	NVME_FEAT_FID_FDP_EVENTS				= 0x1e,
+	NVME_FEAT_FID_NAMESPACE_ADMIN_LABEL 	= 0x1f,
 	NVME_FEAT_FID_ENH_CTRL_METADATA				= 0x7d,
 	NVME_FEAT_FID_CTRL_METADATA				= 0x7e,
 	NVME_FEAT_FID_NS_METADATA				= 0x7f,
