@@ -2241,6 +2241,11 @@ const char *nvme_ns_get_firmware(nvme_ns_t n)
 	return n->c ? n->c->firmware : n->s->firmware;
 }
 
+const char *nvme_ns_get_admin_label(nvme_ns_t n)
+{
+	return n->comment;
+}
+
 int nvme_ns_get_lba_size(nvme_ns_t n)
 {
 	return n->lba_size;
@@ -2649,11 +2654,21 @@ static nvme_ns_t nvme_ns_open(const char *sys_path, const char *name)
 		errno = ENOMEM;
 		return NULL;
 	}
+	
+	int id, ct, ret;
+	char tail[10] = { 0 };
+	char outputname[30] = { 0 };
 
 	n->fd = -1;
 	n->name = strdup(name);
 
-	nvme_ns_set_generic_name(n, name);
+	ret = sscanf(name, "nvme%dc%d%s", &id, &ct, tail);
+	if (ret == 3) {
+		sprintf(outputname, "nvme%d%s", id, tail);
+		n->name = strdup(outputname);
+	}
+
+	nvme_ns_set_generic_name(n, outputname);
 
 	if (nvme_ns_init(sys_path, n) != 0)
 		goto free_ns;
@@ -2729,6 +2744,19 @@ nvme_ns_t nvme_scan_namespace(const char *name)
 	return __nvme_scan_namespace(nvme_ns_sysfs_dir(), name);
 }
 
+static void update_namespace_admin_label(nvme_ns_t n, nvme_ctrl_t c, nvme_root_t r)
+{
+	int err, fd;
+
+	fd = nvme_ctrl_get_fd(c);
+
+	err = nvme_get_features_namespace_admin_label(fd, NVME_GET_FEATURES_SEL_SAVED, 
+							n->nsid, n->comment, 254);
+	if (err) {
+		nvme_msg(r, LOG_DEBUG, "failed to retrieve admin label for namespace %s\n", n->name);
+	}
+}
+
 static int nvme_ctrl_scan_namespace(nvme_root_t r, struct nvme_ctrl *c,
 				    char *name)
 {
@@ -2752,7 +2780,8 @@ static int nvme_ctrl_scan_namespace(nvme_root_t r, struct nvme_ctrl *c,
 		__nvme_free_ns(_n);
 	}
 	n->s = c->s;
-	n->c = c;
+	n->c = c; 
+	update_namespace_admin_label(n, c, r);
 	list_add_tail(&c->namespaces, &n->entry);
 	return 0;
 }

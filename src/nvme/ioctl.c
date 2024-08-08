@@ -922,7 +922,7 @@ static int __nvme_get_features(int fd, enum nvme_features_id fid,
 }
 
 int nvme_get_features_namespace_admin_label(int fd, enum nvme_get_features_sel sel, 
-									__u32 nsid, char* data, __u32 *result, __u32 data_len)
+									__u32 nsid, char* data, __u32 data_len)
 {
 	struct nvme_get_features_args args = {
 		.args_size = sizeof(args),
@@ -934,7 +934,7 @@ int nvme_get_features_namespace_admin_label(int fd, enum nvme_get_features_sel s
 		.data_len = data_len,
 		.data = data,
 		.timeout = NVME_DEFAULT_IOCTL_TIMEOUT,
-		.result = result,
+		.result = NULL,
 	};
 
 	return nvme_get_features(&args);

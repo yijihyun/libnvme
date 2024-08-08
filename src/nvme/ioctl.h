@@ -2861,13 +2861,12 @@ static inline int nvme_get_features_simple(int fd, enum nvme_features_id fid,
  * @nsid:		Namespace ID
  * @data:		Buffer to receive namespace admin label
  * @data_len:	Length of the data buffer
- * @result:		The command completion result from CQE dword0
  *
  * Return: The nvme command status if a response was received (see
  * &enum nvme_status_field) or -1 with errno set otherwise.
  */
 int nvme_get_features_namespace_admin_label(int fd, enum nvme_get_features_sel sel, 
-									__u32 nsid, char* data, __u32 *result, __u32 data_len);
+									__u32 nsid, char* data, __u32 data_len);
 /**
  * nvme_get_features_arbitration() - Get arbitration feature
  * @fd:		File descriptor of nvme device

@@ -708,6 +708,14 @@ const char *nvme_ns_get_generic_name(nvme_ns_t n);
 const char *nvme_ns_get_firmware(nvme_ns_t n);
 
 /**
+ * nvme_ns_get_admin_label() - Admin label string of a namespace
+ * @n:	Namespace instance
+ *
+ * Return: Admiin label string of @n
+ */
+const char *nvme_ns_get_admin_label(nvme_ns_t n);
+
+/**
  * nvme_ns_get_serial() - Serial number of a namespace
  * @n:	Namespace instance
  *

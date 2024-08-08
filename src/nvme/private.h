@@ -60,6 +60,7 @@ struct nvme_ns {
 	uint8_t nguid[16];
 	unsigned char uuid[NVME_UUID_LEN];
 	enum nvme_csi csi;
+	char comment[254];
 };
 
 struct nvme_ctrl {

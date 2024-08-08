@@ -27,6 +27,20 @@ int nvme_namespace_filter(const struct dirent *d)
 	return 0;
 }
 
+int nvme_namespace_filter_in_ctrl(const struct dirent *d)
+{
+	int i, c, n;
+
+	if (d->d_name[0] == '.')
+		return 0;
+	
+	if (strstr(d->d_name, "nvme")) {
+		if (sscanf(d->d_name, "nvme%dc%dn%d", &i, &c, &n) == 3)
+			return 1;
+	}
+	return 0;
+}
+
 int nvme_paths_filter(const struct dirent *d)
 {
 	int i, c, n;
@@ -103,5 +117,5 @@ int nvme_scan_ctrl_namespace_paths(nvme_ctrl_t c, struct dirent ***paths)
 int nvme_scan_ctrl_namespaces(nvme_ctrl_t c, struct dirent ***ns)
 {
 	return scandir(nvme_ctrl_get_sysfs_dir(c), ns,
-		       nvme_namespace_filter, alphasort);
+		       nvme_namespace_filter_in_ctrl, alphasort);
 }
